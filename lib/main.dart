@@ -12,7 +12,7 @@ void main() {
       theme: AppTheme.light, // used in light mode
       darkTheme: AppTheme.dark, // used in dark mode
       themeMode: ThemeMode.system, // follows the phone setting
-      home: const DetailScreen(),
+      home: const HomeScreen(),
       debugShowCheckedModeBanner: false,
     ),
   );
