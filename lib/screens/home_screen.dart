@@ -3,13 +3,12 @@ import '../data/mock_expenses.dart';
 import '../services/exchange_rate_service.dart';
 import '../widgets/total_card.dart';
 import '../widgets/expense_list.dart';
+import 'package:expensetracker/widgets/empty_state.dart';
 
 // Expenses are stored in their original currency; the total is shown in this one.
 const _baseCurrency = 'USD';
 
 class HomeScreen extends StatefulWidget {
-  static const String id = "/homescreen";
-
   const HomeScreen({super.key});
 
   @override
@@ -87,8 +86,6 @@ class _HomeScreenState extends State<HomeScreen> {
     }
 
     return Scaffold(
-      backgroundColor: const Color(0xFFF7F6F5),
-
       appBar: AppBar(
         title: const Text(
           'Expenses',
@@ -99,39 +96,50 @@ class _HomeScreenState extends State<HomeScreen> {
         ], // menu → actions
       ),
 
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          totalArea,
-          const Padding(
-            padding: EdgeInsets.only(top: 22, left: 22, right: 22, bottom: 4),
-            child: Text(
-              'RECENT',
-              style: TextStyle(
-                fontSize: 14,
-                fontWeight: FontWeight.bold,
-                color: Color(0xFF8B8785),
-              ),
+      body: mockExpenses.isEmpty
+          ? const EmptyState() // no data → show empty state (inside Home's Scaffold)
+          : Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                totalArea,
+                const Padding(
+                  padding: EdgeInsets.only(
+                    top: 22,
+                    left: 22,
+                    right: 22,
+                    bottom: 4,
+                  ),
+                  child: Text(
+                    'RECENT',
+                    style: TextStyle(
+                      fontSize: 14,
+                      fontWeight: FontWeight.bold,
+                      color: Color(0xFF8B8785),
+                    ),
+                  ),
+                ),
+                const Divider(
+                  color: Color(0xFFE0E0EE),
+                  thickness: 2,
+                  height: 5,
+                ),
+                Expanded(
+                  child: ListView.builder(
+                    itemCount: mockExpenses.length,
+                    padding: const EdgeInsets.symmetric(horizontal: 22),
+                    itemBuilder: (context, index) =>
+                        ExpenseListTile(expense: mockExpenses[index]),
+                  ),
+                ),
+              ],
             ),
-          ),
-          const Divider(color: Color(0xFFE0E0EE), thickness: 2, height: 5),
-          Expanded(
-            child: ListView.builder(
-              itemCount: mockExpenses.length,
-              padding: const EdgeInsets.symmetric(horizontal: 22),
-              itemBuilder: (context, index) =>
-                  ExpenseListTile(expense: mockExpenses[index]),
-            ),
-          ),
-        ],
-      ),
 
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {},
-        backgroundColor: const Color(0xFFEC3013),
-        shape: const RoundedRectangleBorder(borderRadius: BorderRadius.zero),
-        child: const Icon(Icons.add, size: 30, color: Colors.white),
-      ),
+      floatingActionButton: mockExpenses.isEmpty
+          ? null
+          : FloatingActionButton(
+              onPressed: () {},
+              child: const Icon(Icons.add, size: 30, color: Colors.white),
+            ),
     );
   }
 }
