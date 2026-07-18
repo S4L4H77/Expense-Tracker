@@ -18,7 +18,7 @@ class Expense {
   final String currency; // ISO code: 'USD', 'ILS', 'EUR', 'GBP', 'JPY'
   final Category category;
   final DateTime date;
-  final String? notes; // the ? means it can be null (empty notes)
+  final String? notes;
 
   const Expense({
     required this.title,
