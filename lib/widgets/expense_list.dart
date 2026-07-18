@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import '../models/expense.dart';
 import '../core/category_icons.dart';
+import 'package:expensetracker/core/theme.dart';
 
 class ExpenseListTile extends StatelessWidget {
   final Expense expense;
@@ -36,26 +37,23 @@ class ExpenseListTile extends StatelessWidget {
                   style: const TextStyle(
                     fontSize: 15,
                     fontWeight: FontWeight.bold,
-                    color: Color(0xFF201E1D),
+                    color: AppColors.ink,
                   ),
                 ),
                 const SizedBox(height: 3),
                 Text(
                   '${DateFormat.MMMd().format(expense.date)} · ${expense.category.label}',
-                  style: const TextStyle(
-                    fontSize: 12,
-                    color: Color(0xFF8B8785),
-                  ),
+                  style: const TextStyle(fontSize: 12, color: AppColors.muted),
                 ),
               ],
             ),
           ),
           Text(
-            expense.formattedAmount, // formatted here, not in data
-            style: const TextStyle(
+            expense.formattedAmount,
+            style: TextStyle(
               fontSize: 15,
               fontWeight: FontWeight.bold,
-              color: Color(0xFF201E1D),
+              color: Theme.of(context).colorScheme.onSurface,
             ),
           ),
         ],
