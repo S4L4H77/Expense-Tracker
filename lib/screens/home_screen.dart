@@ -4,6 +4,7 @@ import '../services/exchange_rate_service.dart';
 import '../widgets/total_card.dart';
 import '../widgets/expense_list.dart';
 import 'package:expensetracker/widgets/empty_state.dart';
+import '../screens/detail_screen.dart';
 
 // Expenses are stored in their original currency; the total is shown in this one.
 const _baseCurrency = 'USD';
@@ -127,8 +128,22 @@ class _HomeScreenState extends State<HomeScreen> {
                   child: ListView.builder(
                     itemCount: mockExpenses.length,
                     padding: const EdgeInsets.symmetric(horizontal: 22),
-                    itemBuilder: (context, index) =>
-                        ExpenseListTile(expense: mockExpenses[index]),
+                    itemBuilder: (context, index) {
+                      final expense = mockExpenses[index];
+                      return InkWell(
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => DetailScreen(
+                                expense: expense,
+                              ), // pass the tapped expense
+                            ),
+                          );
+                        },
+                        child: ExpenseList(expense: expense),
+                      );
+                    },
                   ),
                 ),
               ],
