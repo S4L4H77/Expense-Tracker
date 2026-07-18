@@ -3,11 +3,14 @@ import '../widgets/appbarbutton.dart';
 
 class DetailScreen extends StatelessWidget {
   const DetailScreen({super.key});
+  static const String id = "/detailscreen";
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: const Color(0xFFF7F6F5),
       appBar: AppBar(
+        backgroundColor: const Color(0xFFF7F6F5),
         leadingWidth: 56,
         leading: Center(
           child: appBarButton(
@@ -43,12 +46,12 @@ class DetailScreen extends StatelessWidget {
               child: Container(
                 width: 56,
                 height: 56,
-                padding: const EdgeInsets.all(16),
                 color: Color(0xFFC98A1A),
+                alignment: Alignment.center,
                 child: Icon(
                   Icons.attach_money_rounded,
                   color: Colors.white,
-                  size: 26,
+                  size: 30,
                 ),
               ),
             ),
