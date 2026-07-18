@@ -172,7 +172,7 @@ class _HomescreenState extends State<HomeScreen> {
                       // Colored icon box
                       Container(
                         width: 42,
-                        height: 45,
+                        height: 42,
                         color: item['color'] as Color,
                         child: Icon(
                           item['icon'] as IconData,
