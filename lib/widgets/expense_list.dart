@@ -4,9 +4,9 @@ import '../models/expense.dart';
 import '../core/category_icons.dart';
 import 'package:expensetracker/core/theme.dart';
 
-class ExpenseListTile extends StatelessWidget {
+class ExpenseList extends StatelessWidget {
   final Expense expense;
-  const ExpenseListTile({super.key, required this.expense});
+  const ExpenseList({super.key, required this.expense});
 
   @override
   Widget build(BuildContext context) {
