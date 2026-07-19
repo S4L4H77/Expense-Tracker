@@ -1,17 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
+import '../models/expense.dart';
+import '../core/category_icons.dart';
 import '../widgets/appbarbutton.dart';
 
 class DetailScreen extends StatelessWidget {
-  const DetailScreen({super.key});
+  final Expense expense;
+  const DetailScreen({super.key, required this.expense});
   static const String id = "/detailscreen";
 
   @override
   Widget build(BuildContext context) {
+    final onSurface = Theme.of(context).colorScheme.onSurface;
     return Scaffold(
-      backgroundColor: const Color(0xFFF7F6F5),
       appBar: AppBar(
-        backgroundColor: const Color(0xFFF7F6F5),
-        leadingWidth: 56,
         leading: Center(
           child: appBarButton(
             icon: Icons.arrow_back_ios_new,
@@ -36,103 +38,78 @@ class DetailScreen extends StatelessWidget {
         ],
       ),
 
-      body: SizedBox(
-        height: double.infinity,
-        child: Stack(
+      body: Padding(
+        padding: const EdgeInsets.all(20),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Positioned(
-              top: 25,
-              left: 15,
-              child: Container(
-                width: 56,
-                height: 56,
-                color: Color(0xFFC98A1A),
-                alignment: Alignment.center,
-                child: Icon(
-                  Icons.attach_money_rounded,
-                  color: Colors.white,
-                  size: 30,
-                ),
+            Container(
+              width: 56,
+              height: 56,
+              color: categoryColors[expense.category],
+              alignment: Alignment.center,
+              child: Icon(
+                categoryIcons[expense.category],
+                color: Colors.white,
+                size: 30,
               ),
             ),
-
-            const Positioned(
-              top: 100,
-              left: 15,
-              child: Text(
-                'AMOUNT  . USD',
-                style: TextStyle(color: Color(0xFF8B8785)),
+            const SizedBox(height: 20),
+            Text(
+              'AMOUNT · ${expense.currency}',
+              style: const TextStyle(color: Color(0xFF8B8785)),
+            ),
+            const SizedBox(height: 4),
+            Text(
+              expense.formattedAmount,
+              style: TextStyle(
+                color: onSurface,
+                fontSize: 35,
+                fontWeight: FontWeight.bold,
               ),
             ),
-            Positioned(
-              top: 125,
-              left: 40,
-              right: 0,
-              child: Text(
-                'total anount here',
-                style: TextStyle(color: Color(0xFF201E1D), fontSize: 35),
-              ),
+            const SizedBox(height: 8),
+            Text(
+              expense.title,
+              style: TextStyle(color: onSurface, fontSize: 26),
             ),
+            const SizedBox(height: 20),
 
-            Positioned(
-              top: 182,
-              left: 15,
-              child: Text(
-                "Laptop",
-                style: TextStyle(color: Color(0xFF201E1D), fontSize: 26),
-              ),
+            const Divider(thickness: 1),
+            _detailRow('CATEGORY', expense.category.label, onSurface),
+            const Divider(thickness: 0.4),
+            _detailRow(
+              'DATE',
+              DateFormat('MMM d, y').format(expense.date),
+              onSurface,
             ),
+            const Divider(thickness: 0.4),
 
-            Positioned(
-              top: 230,
-              left: 25,
-              right: 25,
-
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Divider(thickness: 1, color: Colors.grey),
-                  SizedBox(height: 5),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        "CATEGORY",
-                        style: TextStyle(color: Color(0xFF8B8785)),
-                      ),
-                      Text(
-                        "Bills",
-                        style: TextStyle(color: Colors.black, fontSize: 15),
-                      ),
-                    ],
-                  ),
-                  SizedBox(height: 5),
-                  Divider(thickness: 0.4, color: Colors.grey),
-                  SizedBox(height: 5),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text("DATE", style: TextStyle(color: Color(0xFF8B8785))),
-                      Text(
-                        "Jul 10, 2026",
-                        style: TextStyle(color: Colors.black, fontSize: 15),
-                      ),
-                    ],
-                  ),
-                  SizedBox(height: 5),
-                  Divider(thickness: 0.4, color: Colors.grey),
-                  SizedBox(height: 5),
-                  Text("NOTES", style: TextStyle(color: Color(0xFF8B8785))),
-                  SizedBox(height: 5),
-                  Text(
-                    "Work laptop — reimbursable through the Q3 equipment budget.",
-                    style: TextStyle(color: Color(0xFF201E1D)),
-                  ),
-                ],
+            const SizedBox(height: 12),
+            const Text('NOTES', style: TextStyle(color: Color(0xFF8B8785))),
+            const SizedBox(height: 5),
+            Text(
+              expense.notes ?? 'No notes', // ?? = fallback when notes is null
+              style: TextStyle(
+                color: expense.notes == null ? Colors.grey : onSurface,
               ),
             ),
           ],
         ),
+      ),
+    );
+  }
+
+  // A small helper so we don't repeat the same Row 2 times (CATEGORY, DATE).
+  Widget _detailRow(String label, String value, Color valueColor) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 8),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Text(label, style: const TextStyle(color: Color(0xFF8B8785))),
+          Text(value, style: TextStyle(color: valueColor, fontSize: 15)),
+        ],
       ),
     );
   }
