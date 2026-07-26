@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:expensetracker/core/theme.dart';
+import 'package:expensetracker/screens/add_expense.dart';
 
 class EmptyState extends StatelessWidget {
   const EmptyState({super.key});
@@ -44,7 +45,14 @@ class EmptyState extends StatelessWidget {
           ),
           const SizedBox(height: 30),
           ElevatedButton.icon(
-            onPressed: () {},
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => const AddExpenseScreen(),
+                ),
+              );
+            },
             icon: const Icon(Icons.add, size: 20),
             label: const Text(
               'Add expense',
