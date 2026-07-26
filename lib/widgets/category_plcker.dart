@@ -65,8 +65,9 @@ class _CategoryChip extends StatelessWidget {
           // Chips sit on the #F7F6F5 page, so they need to be lighter than it
           // in light mode; in dark mode the border alone defines the shape.
           color: isDark ? Colors.transparent : Colors.white,
-          border: Border.all(color: borderColor, width: isSelected ? 1.5 : 1),
+          border: Border.all(color: borderColor, width: isSelected ? 1.1 : 0.9),
         ),
+
         child: Row(
           // .min makes the Row hug its content instead of filling the width —
           // this is what gives each chip its own natural size.
@@ -84,8 +85,11 @@ class _CategoryChip extends StatelessWidget {
               style: TextStyle(
                 fontSize: 14,
                 // Weight change so selection isn't signalled by colour alone.
-                fontWeight: isSelected ? FontWeight.w600 : FontWeight.normal,
-                color: Theme.of(context).colorScheme.onSurface,
+                fontWeight: isSelected ? FontWeight.w500 : FontWeight.normal,
+                color: isSelected
+                    ? AppColors.accent
+                    : Theme.of(context).colorScheme.onSurface,
+                // color: Theme.of(context).colorScheme.onSurface,
               ),
             ),
           ],
