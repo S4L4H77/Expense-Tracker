@@ -1,8 +1,8 @@
 import 'package:expensetracker/models/expense.dart';
-import 'package:expensetracker/widgets/category_plcker.dart';
+import 'package:expensetracker/widgets/category_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:expensetracker/core/theme.dart';
-import 'package:expensetracker/widgets/textfiled.dart';
+import 'package:expensetracker/widgets/labeled_field.dart';
 
 class AddExpenseScreen extends StatefulWidget {
   const AddExpenseScreen({super.key});
@@ -28,7 +28,7 @@ class _AddExpenseScreenState extends State<AddExpenseScreen> {
         title: Center(
           child: const Text(
             'Add Expense',
-            style: TextStyle(color: AppColors.ink, fontWeight: FontWeight.bold),
+            style: TextStyle(fontWeight: FontWeight.bold),
           ),
         ),
 

@@ -2,28 +2,31 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import '../models/expense.dart';
 import '../core/category_icons.dart';
-import 'package:expensetracker/core/theme.dart';
+import '../core/theme.dart';
 
-class ExpenseList extends StatelessWidget {
+class ExpenseTile extends StatelessWidget {
   final Expense expense;
-  const ExpenseList({super.key, required this.expense});
+  const ExpenseTile({super.key, required this.expense});
 
   @override
   Widget build(BuildContext context) {
+    final colors = Theme.of(context).colorScheme;
+
     return Container(
       padding: const EdgeInsets.symmetric(vertical: 13),
-      decoration: const BoxDecoration(
-        border: Border(bottom: BorderSide(color: Color(0xFFE0E0E0))),
+      decoration: BoxDecoration(
+        border: Border(bottom: BorderSide(color: colors.outlineVariant)),
       ),
       child: Row(
         children: [
           Container(
             width: 42,
             height: 42,
-            color: categoryColors[expense.category], // lookup, not stored data
+            color: categoryColors[expense.category],
             child: Icon(
               categoryIcons[expense.category],
-              color: Colors.white,
+              color:
+                  Colors.white, // on a category fill — correct in both themes
               size: 23,
             ),
           ),
@@ -34,10 +37,12 @@ class ExpenseList extends StatelessWidget {
               children: [
                 Text(
                   expense.title,
-                  style: const TextStyle(
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: TextStyle(
                     fontSize: 15,
                     fontWeight: FontWeight.bold,
-                    color: AppColors.ink,
+                    color: colors.onSurface, // was AppColors.ink
                   ),
                 ),
                 const SizedBox(height: 3),
@@ -53,7 +58,7 @@ class ExpenseList extends StatelessWidget {
             style: TextStyle(
               fontSize: 15,
               fontWeight: FontWeight.bold,
-              color: Theme.of(context).colorScheme.onSurface,
+              color: colors.onSurface,
             ),
           ),
         ],

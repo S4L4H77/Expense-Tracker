@@ -1,8 +1,9 @@
+import 'package:expensetracker/widgets/appbarbutton.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import '../models/expense.dart';
 import '../core/category_icons.dart';
-import '../widgets/appbarbutton.dart';
+import '../core/theme.dart';
 
 class DetailScreen extends StatelessWidget {
   final Expense expense;
@@ -15,20 +16,20 @@ class DetailScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         leading: Center(
-          child: appBarButton(
+          child: AppBarButton(
             icon: Icons.arrow_back_ios_new,
             onPressed: () => Navigator.pop(context),
           ),
         ),
         actions: [
           Center(
-            child: appBarButton(icon: Icons.edit, onPressed: () {}),
+            child: AppBarButton(icon: Icons.edit, onPressed: () {}),
           ),
           const SizedBox(width: 8),
           Center(
-            child: appBarButton(
+            child: AppBarButton(
               icon: Icons.delete_outline,
-              backgroundColor: const Color(0xFFEC3013),
+              backgroundColor: AppColors.accent,
               iconColor: Colors.white,
               border: false,
               onPressed: () {},
@@ -57,7 +58,7 @@ class DetailScreen extends StatelessWidget {
             const SizedBox(height: 20),
             Text(
               'AMOUNT · ${expense.currency}',
-              style: const TextStyle(color: Color(0xFF8B8785)),
+              style: const TextStyle(color: AppColors.muted),
             ),
             const SizedBox(height: 4),
             Text(
@@ -92,7 +93,7 @@ class DetailScreen extends StatelessWidget {
             const Divider(thickness: 1),
 
             const SizedBox(height: 12),
-            const Text('NOTES', style: TextStyle(color: Color(0xFF8B8785))),
+            const Text('NOTES', style: TextStyle(color: AppColors.muted)),
             const SizedBox(height: 5),
             Text(
               expense.notes ?? 'No notes', // ?? = fallback when notes is null
@@ -113,7 +114,7 @@ class DetailScreen extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Text(label, style: const TextStyle(color: Color(0xFF8B8785))),
+          Text(label, style: const TextStyle(color: AppColors.muted)),
           Row(
             children: [
               if (type == 'CATEGORY')

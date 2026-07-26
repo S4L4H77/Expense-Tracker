@@ -89,8 +89,8 @@ Widget textfield({
                   borderSide: BorderSide(color: AppColors.accent),
                 ),
               ),
-              style: const TextStyle(
-                color: AppColors.ink,
+              style: TextStyle(
+                color: Theme.of(context).colorScheme.onSurface,
                 fontWeight: FontWeight.bold,
               ),
               items: const [

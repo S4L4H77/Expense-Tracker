@@ -6,6 +6,8 @@ import '../widgets/total_card.dart';
 import '../widgets/expense_tile.dart';
 import 'package:expensetracker/widgets/empty_state.dart';
 import '../screens/detail_screen.dart';
+import '../core/theme.dart';
+import '../widgets/appbarbutton.dart';
 
 // Expenses are stored in their original currency; the total is shown in this one.
 const _baseCurrency = 'USD';
@@ -94,7 +96,12 @@ class _HomeScreenState extends State<HomeScreen> {
           style: TextStyle(fontSize: 34, fontWeight: FontWeight.bold),
         ),
         actions: [
-          IconButton(icon: const Icon(Icons.menu, size: 30), onPressed: () {}),
+          Padding(
+            padding: const EdgeInsets.only(right: 16),
+            child: Center(
+              child: AppBarButton(icon: Icons.menu, onPressed: () {}),
+            ),
+          ),
         ], // menu → actions
       ),
 
@@ -116,7 +123,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     style: TextStyle(
                       fontSize: 14,
                       fontWeight: FontWeight.bold,
-                      color: Color(0xFF8B8785),
+                      color: AppColors.muted,
                     ),
                   ),
                 ),
@@ -147,7 +154,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             ),
                           );
                         },
-                        child: ExpenseList(expense: expense),
+                        child: ExpenseTile(expense: expense),
                       );
                     },
                   ),

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import '../core/theme.dart';
 
 class TotalCard extends StatelessWidget {
   final int totalMinor;
@@ -26,7 +27,7 @@ class TotalCard extends StatelessWidget {
       width: double.infinity, // fills width → responsive (fixes width:345)
       margin: const EdgeInsets.all(15),
       padding: const EdgeInsets.all(16),
-      color: const Color(0xFFEC3013),
+      color: AppColors.accent,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
