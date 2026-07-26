@@ -14,7 +14,7 @@ class AddExpenseScreen extends StatefulWidget {
 
 class _AddExpenseScreenState extends State<AddExpenseScreen> {
   Category _selected = Category.food;
-
+  DateTime _selectedDate = DateTime.now();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -53,9 +53,10 @@ class _AddExpenseScreenState extends State<AddExpenseScreen> {
 
           const SizedBox(height: 20),
 
-          Padding(
-            padding: const EdgeInsets.only(left: 20.0),
+          Center(
             child: textfield(
+              context: context,
+
               labelText: 'TITLE',
               hintText: 'Coffee',
               width: 348,
@@ -64,14 +65,12 @@ class _AddExpenseScreenState extends State<AddExpenseScreen> {
           ),
 
           Row(
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Padding(
-                padding: const EdgeInsets.only(
-                  left: 20.0,
-                  top: 20.0,
-                  right: 10.0,
-                ),
+                padding: const EdgeInsets.only(top: 20.0, right: 7.0),
                 child: textfield(
+                  context: context,
                   labelText: 'AMOUNT',
                   hintText: '10.00',
                   width: 207,
@@ -79,11 +78,12 @@ class _AddExpenseScreenState extends State<AddExpenseScreen> {
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.only(top: 20.0, right: 10.0),
+                padding: const EdgeInsets.only(top: 20.0),
                 child: textfield(
+                  context: context,
                   labelText: 'CURRENCY',
                   hintText: 'USD',
-                  width: 139,
+                  width: 129,
                   type: 'currency',
                 ),
               ),
@@ -92,9 +92,53 @@ class _AddExpenseScreenState extends State<AddExpenseScreen> {
 
           SizedBox(height: 16),
 
-          CategoryPicker(
-            selected: _selected,
-            onChanged: (category) => setState(() => _selected = category),
+          Padding(
+            padding: const EdgeInsets.only(left: 32.0, bottom: 8.0),
+            child: Text(
+              "CATEGORY",
+              style: TextStyle(
+                fontSize: 14,
+                fontWeight: FontWeight.bold,
+                color: AppColors.muted,
+              ),
+            ),
+          ),
+
+          Padding(
+            padding: const EdgeInsets.only(left: 30.0, right: 50.0),
+            child: CategoryPicker(
+              selected: _selected,
+              onChanged: (category) => setState(() => _selected = category),
+            ),
+          ),
+
+          Center(
+            child: Padding(
+              padding: const EdgeInsets.only(top: 20.0),
+              child: textfield(
+                context: context,
+                labelText: 'DATE',
+                width: 348,
+                type: 'date',
+                selectedDate: _selectedDate,
+                onDateChanged: (date) {
+                  setState(() => _selectedDate = date);
+                },
+              ),
+            ),
+          ),
+          Center(
+            child: Padding(
+              padding: const EdgeInsets.only(top: 20.0),
+              child: textfield(
+                context: context,
+                labelText: 'NOTES',
+                hintText: 'Optional...',
+                width: 348,
+                height: 70,
+                type: 'normal',
+              ),
+            ),
           ),
         ],
       ),
