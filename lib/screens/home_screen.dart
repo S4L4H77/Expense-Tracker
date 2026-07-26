@@ -128,7 +128,12 @@ class _HomeScreenState extends State<HomeScreen> {
                 Expanded(
                   child: ListView.builder(
                     itemCount: mockExpenses.length,
-                    padding: const EdgeInsets.symmetric(horizontal: 22),
+                    padding: const EdgeInsets.fromLTRB(
+                      22,
+                      0,
+                      22,
+                      100, // prevents the FAB covering the last expense
+                    ),
                     itemBuilder: (context, index) {
                       final expense = mockExpenses[index];
                       return InkWell(
