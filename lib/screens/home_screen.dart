@@ -1,3 +1,4 @@
+import 'package:expensetracker/screens/add_expense.dart';
 import 'package:flutter/material.dart';
 import '../data/mock_expenses.dart';
 import '../services/exchange_rate_service.dart';
@@ -152,7 +153,14 @@ class _HomeScreenState extends State<HomeScreen> {
       floatingActionButton: mockExpenses.isEmpty
           ? null
           : FloatingActionButton(
-              onPressed: () {},
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const AddExpenseScreen(),
+                  ),
+                );
+              },
               child: const Icon(Icons.add, size: 30, color: Colors.white),
             ),
     );
