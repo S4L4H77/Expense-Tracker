@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import '../data/mock_expenses.dart';
 import '../services/exchange_rate_service.dart';
 import '../widgets/total_card.dart';
-import '../widgets/expense_list.dart';
+import '../widgets/expense_tile.dart';
 import 'package:expensetracker/widgets/empty_state.dart';
 import '../screens/detail_screen.dart';
 
