@@ -11,6 +11,7 @@ class DetailScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final Category category;
     final onSurface = Theme.of(context).colorScheme.onSurface;
     return Scaffold(
       appBar: AppBar(
@@ -75,15 +76,21 @@ class DetailScreen extends StatelessWidget {
             ),
             const SizedBox(height: 20),
 
+            const Divider(thickness: 2),
+            _detailRow(
+              'CATEGORY',
+              expense.category.label,
+              onSurface,
+              'CATEGORY',
+            ),
             const Divider(thickness: 1),
-            _detailRow('CATEGORY', expense.category.label, onSurface),
-            const Divider(thickness: 0.4),
             _detailRow(
               'DATE',
               DateFormat('MMM d, y').format(expense.date),
               onSurface,
+              'DATE',
             ),
-            const Divider(thickness: 0.4),
+            const Divider(thickness: 1),
 
             const SizedBox(height: 12),
             const Text('NOTES', style: TextStyle(color: Color(0xFF8B8785))),
@@ -101,14 +108,34 @@ class DetailScreen extends StatelessWidget {
   }
 
   // A small helper so we don't repeat the same Row 2 times (CATEGORY, DATE).
-  Widget _detailRow(String label, String value, Color valueColor) {
+  Widget _detailRow(String label, String value, Color valueColor, String type) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 8),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Text(label, style: const TextStyle(color: Color(0xFF8B8785))),
-          Text(value, style: TextStyle(color: valueColor, fontSize: 15)),
+          Row(
+            children: [
+              if (type == 'CATEGORY')
+                Container(
+                  width: 12,
+                  height: 12,
+                  color: categoryColors[expense.category],
+                ),
+
+              const SizedBox(width: 5),
+
+              Text(
+                value,
+                style: TextStyle(
+                  color: valueColor,
+                  fontSize: 15,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ],
+          ),
         ],
       ),
     );
