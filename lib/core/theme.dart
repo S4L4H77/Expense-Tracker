@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 // ── 1. Named colors — one source of truth (from your design palette [17]) ──
 class AppColors {
@@ -51,6 +52,9 @@ class AppTheme {
 
   // ── 3. DARK theme (same recipe, dark surfaces) ──
   static ThemeData get dark => ThemeData(
+    textTheme: GoogleFonts.archivoTextTheme(
+      ThemeData(brightness: Brightness.dark).textTheme,
+    ),
     useMaterial3: true,
     brightness: Brightness.dark,
     scaffoldBackgroundColor: AppColors.surfaceDark,
