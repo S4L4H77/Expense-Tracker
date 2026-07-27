@@ -153,8 +153,8 @@ Widget textfield({
                 children: [
                   Text(
                     DateFormat('MMM d, y').format(date),
-                    style: const TextStyle(
-                      color: AppColors.ink,
+                    style: TextStyle(
+                      color: Theme.of(context).colorScheme.onSurface,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
