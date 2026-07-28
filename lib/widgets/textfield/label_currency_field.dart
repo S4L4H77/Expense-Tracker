@@ -2,17 +2,18 @@ import 'package:flutter/material.dart';
 import 'package:expensetracker/core/theme.dart';
 
 class LabelCurrencyField extends StatelessWidget {
-  final String? labelText;
-  final String? hintText;
+  static const List<String> currencies = ['USD', 'ILS', 'GBP', 'JPY', 'EUR'];
+  final String? label;
+  final String? hint;
   final double width;
-  final double? height;
+  final ValueChanged<String> onChanged;
 
   const LabelCurrencyField({
     super.key,
-    required this.labelText,
-    required this.hintText,
-    required this.width,
-    required this.height,
+    required this.label,
+    required this.hint,
+    required this.onChanged,
+    this.width = 0,
   });
 
   @override
@@ -21,47 +22,44 @@ class LabelCurrencyField extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          labelText ?? 'Default label',
+          label ?? 'Default label',
           style: TextStyle(
             fontSize: 14,
             fontWeight: FontWeight.bold,
             color: AppColors.muted,
           ),
         ),
+        const SizedBox(height: 5),
 
-        Padding(
-          padding: const EdgeInsets.only(left: 5.0, top: 5.0),
-          child: SizedBox(
-            width: width > 0 ? width : null,
-            child: DropdownButtonFormField<String>(
-              hint: Text(hintText ?? 'Default hint'),
-              decoration: const InputDecoration(
-                contentPadding: EdgeInsets.symmetric(
-                  horizontal: 14,
-                  vertical: 12,
-                ),
-                enabledBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.zero,
-                  borderSide: BorderSide(color: AppColors.muted),
-                ),
-                focusedBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.zero,
-                  borderSide: BorderSide(color: AppColors.accent),
-                ),
+        SizedBox(
+          width: width > 0 ? width : null,
+          child: DropdownButtonFormField<String>(
+            // hint: Text(hint ?? 'Default hint'),
+            initialValue: hint,
+            decoration: const InputDecoration(
+              contentPadding: EdgeInsets.symmetric(
+                horizontal: 14,
+                vertical: 12,
               ),
-              style: TextStyle(
-                color: Theme.of(context).colorScheme.onSurface,
-                fontWeight: FontWeight.bold,
+              enabledBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.zero,
+                borderSide: BorderSide(color: AppColors.muted),
               ),
-              items: const [
-                DropdownMenuItem(value: 'USD', child: Text('USD')),
-                DropdownMenuItem(value: 'SAR', child: Text('SAR')),
-                DropdownMenuItem(value: 'EUR', child: Text('EUR')),
-              ],
-              onChanged: (value) {
-                // save selected currency here
-              },
+              focusedBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.zero,
+                borderSide: BorderSide(color: AppColors.accent),
+              ),
             ),
+            style: TextStyle(
+              color: Theme.of(context).colorScheme.onSurface,
+              fontWeight: FontWeight.bold,
+            ),
+            items: currencies
+                .map((code) => DropdownMenuItem(value: code, child: Text(code)))
+                .toList(),
+            onChanged: (selected) {
+              if (selected != null) onChanged(selected);
+            },
           ),
         ),
       ],
