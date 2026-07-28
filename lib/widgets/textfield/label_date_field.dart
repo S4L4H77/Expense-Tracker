@@ -2,31 +2,19 @@ import 'package:flutter/material.dart';
 import 'package:expensetracker/core/theme.dart';
 import 'package:intl/intl.dart';
 
-class LabelDateField extends StatefulWidget {
+class LabelDateField extends StatelessWidget {
   final String? labelText;
   final double width;
-  final DateTime? initialDate;
+  final DateTime selectedDate;
+  final ValueChanged<DateTime> onChanged;
 
   const LabelDateField({
     super.key,
     required this.labelText,
     required this.width,
-    this.initialDate,
+    required this.selectedDate,
+    required this.onChanged,
   });
-  // final date = selectedDate ?? DateTime.now();
-
-  @override
-  State<LabelDateField> createState() => _LabeledDateFieldState();
-}
-
-class _LabeledDateFieldState extends State<LabelDateField> {
-  late DateTime _selectedDate;
-
-  @override
-  void initState() {
-    super.initState();
-    _selectedDate = widget.initialDate ?? DateTime.now();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -34,7 +22,7 @@ class _LabeledDateFieldState extends State<LabelDateField> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          widget.labelText ?? 'DATE',
+          labelText ?? 'DATE',
           style: const TextStyle(
             fontSize: 14,
             fontWeight: FontWeight.bold,
@@ -44,20 +32,18 @@ class _LabeledDateFieldState extends State<LabelDateField> {
         const SizedBox(height: 5),
 
         SizedBox(
-          width: widget.width > 0 ? widget.width : null,
+          width: width > 0 ? width : null,
           child: InkWell(
             onTap: () async {
               final pickedDate = await showDatePicker(
                 context: context,
-                initialDate: _selectedDate,
+                initialDate: selectedDate,
                 firstDate: DateTime(2020),
                 lastDate: DateTime(2100),
               );
 
               if (pickedDate != null) {
-                setState(() {});
-
-                _selectedDate = pickedDate;
+                onChanged(pickedDate);
               }
             },
             child: InputDecorator(
@@ -75,7 +61,7 @@ class _LabeledDateFieldState extends State<LabelDateField> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    DateFormat('MMM d, y').format(_selectedDate),
+                    DateFormat('MMM d, y').format(selectedDate),
                     style: TextStyle(
                       color: Theme.of(context).colorScheme.onSurface,
                       fontWeight: FontWeight.bold,
