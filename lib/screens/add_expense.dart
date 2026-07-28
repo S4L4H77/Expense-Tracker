@@ -51,12 +51,22 @@ class _AddExpenseScreenState extends State<AddExpenseScreen> {
         actions: [
           Padding(
             padding: const EdgeInsets.only(right: 8.0),
-            child: Text(
-              "Save",
-              style: TextStyle(
-                color: AppColors.accent,
-                fontWeight: FontWeight.bold,
-                fontSize: 16,
+            child: TextButton(
+              onPressed: () {
+                debugPrint('title    = ${_titleController.text}');
+                debugPrint('amount   = ${_amountController.text}');
+                debugPrint('currency = $_currency');
+                debugPrint('category = ${_selected.label}');
+                debugPrint('date     = $_selectedDate');
+                debugPrint('notes    = ${_notesController.text}');
+              },
+              child: Text(
+                "Save",
+                style: TextStyle(
+                  color: AppColors.accent,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 16,
+                ),
               ),
             ),
           ),
