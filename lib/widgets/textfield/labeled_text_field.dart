@@ -2,17 +2,21 @@ import 'package:flutter/material.dart';
 import 'package:expensetracker/core/theme.dart';
 
 class LabeledTextField extends StatelessWidget {
-  final String? labelText;
-  final String? hintText;
+  final String label;
+  final String? hint;
+  final TextEditingController controller;
+  final bool multiline; // was: height > 0
+  final TextInputType? keyboardType;
   final double width;
-  final double? height;
 
   const LabeledTextField({
     super.key,
-    required this.labelText,
-    required this.hintText,
-    required this.width,
-    required this.height,
+    required this.label,
+    required this.controller,
+    this.hint,
+    this.multiline = false,
+    this.keyboardType,
+    this.width = 0,
   });
 
   @override
@@ -21,38 +25,36 @@ class LabeledTextField extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          labelText ?? 'Default label',
-          style: TextStyle(
+          label,
+          style: const TextStyle(
             fontSize: 14,
             fontWeight: FontWeight.bold,
             color: AppColors.muted,
           ),
         ),
-
-        Padding(
-          padding: const EdgeInsets.only(left: .0, top: 5.0),
-          child: SizedBox(
-            width: width > 0 ? width : null,
-            height: height! > 0 ? height! : null,
-            child: TextField(
-              expands: height! > 0,
-              maxLines: height! > 0 ? null : 1,
-              textAlignVertical: height! > 0 ? TextAlignVertical.top : null,
-              decoration: InputDecoration(
-                hintText: hintText ?? 'Default hint',
-                hintStyle: const TextStyle(color: AppColors.muted),
-                contentPadding: const EdgeInsets.symmetric(
-                  horizontal: 14,
-                  vertical: 12,
-                ),
-                enabledBorder: const OutlineInputBorder(
-                  borderRadius: BorderRadius.zero,
-                  borderSide: BorderSide(color: AppColors.muted),
-                ),
-                focusedBorder: const OutlineInputBorder(
-                  borderRadius: BorderRadius.zero,
-                  borderSide: BorderSide(color: AppColors.accent),
-                ),
+        const SizedBox(height: 5),
+        SizedBox(
+          width: width > 0 ? width : null,
+          child: TextField(
+            controller: controller,
+            keyboardType: keyboardType,
+            maxLines: multiline
+                ? 3
+                : 1, // 4 lines ≈ the design's 66px notes box
+            decoration: InputDecoration(
+              hintText: hint,
+              hintStyle: const TextStyle(color: AppColors.muted),
+              contentPadding: const EdgeInsets.symmetric(
+                horizontal: 14,
+                vertical: 12,
+              ),
+              enabledBorder: const OutlineInputBorder(
+                borderRadius: BorderRadius.zero,
+                borderSide: BorderSide(color: AppColors.muted),
+              ),
+              focusedBorder: const OutlineInputBorder(
+                borderRadius: BorderRadius.zero,
+                borderSide: BorderSide(color: AppColors.accent),
               ),
             ),
           ),
