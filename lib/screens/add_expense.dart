@@ -16,6 +16,8 @@ class AddExpenseScreen extends StatefulWidget {
 
 class _AddExpenseScreenState extends State<AddExpenseScreen> {
   Category _selected = Category.food;
+  DateTime _selectedDate = DateTime.now();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -111,7 +113,12 @@ class _AddExpenseScreenState extends State<AddExpenseScreen> {
           Center(
             child: Padding(
               padding: const EdgeInsets.only(top: 20.0),
-              child: LabelDateField(labelText: 'DATE', width: 348),
+              child: LabelDateField(
+                labelText: 'DATE',
+                width: 348,
+                selectedDate: _selectedDate,
+                onChanged: (date) => setState(() => _selectedDate = date),
+              ),
             ),
           ),
           Center(
