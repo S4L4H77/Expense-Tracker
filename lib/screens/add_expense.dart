@@ -15,8 +15,21 @@ class AddExpenseScreen extends StatefulWidget {
 }
 
 class _AddExpenseScreenState extends State<AddExpenseScreen> {
+  final _titleController = TextEditingController();
+  final _amountController = TextEditingController();
+  final _notesController = TextEditingController();
+
   Category _selected = Category.food;
   DateTime _selectedDate = DateTime.now();
+  String _currency = 'USD';
+
+  @override
+  void dispose() {
+    _titleController.dispose();
+    _amountController.dispose();
+    _notesController.dispose();
+    super.dispose(); // always last
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -58,10 +71,10 @@ class _AddExpenseScreenState extends State<AddExpenseScreen> {
 
           Center(
             child: LabeledTextField(
-              labelText: 'TITLE',
-              hintText: 'Coffee',
+              label: 'TITLE',
+              hint: 'Coffee',
               width: 348,
-              height: 0,
+              controller: _titleController,
             ),
           ),
           Row(
@@ -70,19 +83,24 @@ class _AddExpenseScreenState extends State<AddExpenseScreen> {
               Padding(
                 padding: const EdgeInsets.only(top: 20.0, right: 7.0),
                 child: LabeledTextField(
-                  labelText: 'AMOUNT',
-                  hintText: '10.00',
+                  label: 'AMOUNT',
+                  hint: '10.00',
                   width: 207,
-                  height: 0,
+                  controller: _amountController,
+                  keyboardType: const TextInputType.numberWithOptions(
+                    decimal: true,
+                  ),
                 ),
               ),
               Padding(
                 padding: const EdgeInsets.only(top: 20.0),
                 child: LabelCurrencyField(
-                  labelText: 'CURRENCY',
-                  hintText: 'USD',
+                  label: 'CURRENCY',
+                  hint: 'USD',
                   width: 129,
-                  height: 0,
+                  onChanged: (code) => setState(() {
+                    _currency = code;
+                  }),
                 ),
               ),
             ],
@@ -125,10 +143,11 @@ class _AddExpenseScreenState extends State<AddExpenseScreen> {
             child: Padding(
               padding: const EdgeInsets.only(top: 20.0),
               child: LabeledTextField(
-                labelText: 'NOTES',
-                hintText: 'Optional...',
+                label: 'NOTES',
+                hint: 'Optional...',
                 width: 348,
-                height: 70,
+                controller: _notesController,
+                multiline: true,
               ),
             ),
           ),
