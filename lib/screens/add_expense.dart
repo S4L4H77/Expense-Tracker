@@ -22,7 +22,7 @@ class _AddExpenseScreenState extends State<AddExpenseScreen> {
   Category _selected = Category.food;
   DateTime _selectedDate = DateTime.now();
   String _currency = 'USD';
-
+  final _formKey = GlobalKey<FormState>();
   @override
   void dispose() {
     _titleController.dispose();
@@ -71,97 +71,85 @@ class _AddExpenseScreenState extends State<AddExpenseScreen> {
             ),
           ),
         ],
+
+        bottom: const PreferredSize(
+          preferredSize: Size.fromHeight(2),
+          child: Divider(height: 2),
+        ),
       ),
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Divider(color: AppColors.muted, thickness: 1),
-
-          const SizedBox(height: 20),
-
-          Center(
-            child: LabeledTextField(
-              label: 'TITLE',
-              hint: 'Coffee',
-              width: 348,
-              controller: _titleController,
-            ),
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
+      body: Form(
+        key: _formKey,
+        child: SingleChildScrollView(
+          padding: const EdgeInsets.fromLTRB(20, 20, 20, 40),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Padding(
-                padding: const EdgeInsets.only(top: 20.0, right: 7.0),
-                child: LabeledTextField(
-                  label: 'AMOUNT',
-                  hint: '10.00',
-                  width: 207,
-                  controller: _amountController,
-                  keyboardType: const TextInputType.numberWithOptions(
-                    decimal: true,
+              LabeledTextField(
+                label: 'TITLE',
+                hint: 'Coffee',
+                controller: _titleController,
+              ),
+              const SizedBox(height: 20),
+
+              Row(
+                // Fields have different heights — align their tops, not their centres.
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Expanded(
+                    flex: 16, // the design's 1.6 : 1 ratio, as a proportion
+                    child: LabeledTextField(
+                      label: 'AMOUNT',
+                      hint: '10.00',
+                      controller: _amountController,
+                      keyboardType: const TextInputType.numberWithOptions(
+                        decimal: true,
+                      ),
+                    ),
                   ),
+                  const SizedBox(width: 12),
+                  Expanded(
+                    flex: 10,
+                    child: LabelCurrencyField(
+                      label: 'CURRENCY',
+                      value: _currency,
+                      onChanged: (code) => setState(() => _currency = code),
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 20),
+
+              const Text(
+                'CATEGORY',
+                style: TextStyle(
+                  fontSize: 14,
+                  fontWeight: FontWeight.bold,
+                  color: AppColors.muted,
                 ),
               ),
-              Padding(
-                padding: const EdgeInsets.only(top: 20.0),
-                child: LabelCurrencyField(
-                  label: 'CURRENCY',
-                  hint: 'USD',
-                  width: 129,
-                  onChanged: (code) => setState(() {
-                    _currency = code;
-                  }),
-                ),
+              const SizedBox(height: 8),
+              CategoryPicker(
+                selected: _selected,
+                onChanged: (category) => setState(() => _selected = category),
               ),
-            ],
-          ),
+              const SizedBox(height: 20),
 
-          SizedBox(height: 16),
-
-          Padding(
-            padding: const EdgeInsets.only(left: 32.0, bottom: 8.0),
-            child: Text(
-              "CATEGORY",
-              style: TextStyle(
-                fontSize: 14,
-                fontWeight: FontWeight.bold,
-                color: AppColors.muted,
-              ),
-            ),
-          ),
-
-          Padding(
-            padding: const EdgeInsets.only(left: 30.0, right: 50.0),
-            child: CategoryPicker(
-              selected: _selected,
-              onChanged: (category) => setState(() => _selected = category),
-            ),
-          ),
-
-          Center(
-            child: Padding(
-              padding: const EdgeInsets.only(top: 20.0),
-              child: LabelDateField(
+              LabelDateField(
                 labelText: 'DATE',
-                width: 348,
                 selectedDate: _selectedDate,
                 onChanged: (date) => setState(() => _selectedDate = date),
               ),
-            ),
-          ),
-          Center(
-            child: Padding(
-              padding: const EdgeInsets.only(top: 20.0),
-              child: LabeledTextField(
+              const SizedBox(height: 20),
+
+              LabeledTextField(
                 label: 'NOTES',
                 hint: 'Optional...',
-                width: 348,
                 controller: _notesController,
                 multiline: true,
               ),
-            ),
+            ],
           ),
-        ],
+        ),
       ),
     );
   }
