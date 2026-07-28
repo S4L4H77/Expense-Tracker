@@ -1,8 +1,10 @@
 import 'package:expensetracker/models/expense.dart';
 import 'package:expensetracker/widgets/category_picker.dart';
+import 'package:expensetracker/widgets/textfield/label_currency_field.dart';
+import 'package:expensetracker/widgets/textfield/label_date_field.dart';
+import 'package:expensetracker/widgets/textfield/labeled_text_field.dart';
 import 'package:flutter/material.dart';
 import 'package:expensetracker/core/theme.dart';
-import 'package:expensetracker/widgets/labeled_field.dart';
 
 class AddExpenseScreen extends StatefulWidget {
   const AddExpenseScreen({super.key});
@@ -14,7 +16,6 @@ class AddExpenseScreen extends StatefulWidget {
 
 class _AddExpenseScreenState extends State<AddExpenseScreen> {
   Category _selected = Category.food;
-  DateTime _selectedDate = DateTime.now();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -54,37 +55,32 @@ class _AddExpenseScreenState extends State<AddExpenseScreen> {
           const SizedBox(height: 20),
 
           Center(
-            child: textfield(
-              context: context,
-
+            child: LabeledTextField(
               labelText: 'TITLE',
               hintText: 'Coffee',
               width: 348,
-              type: 'normal',
+              height: 0,
             ),
           ),
-
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Padding(
                 padding: const EdgeInsets.only(top: 20.0, right: 7.0),
-                child: textfield(
-                  context: context,
+                child: LabeledTextField(
                   labelText: 'AMOUNT',
                   hintText: '10.00',
                   width: 207,
-                  type: 'normal',
+                  height: 0,
                 ),
               ),
               Padding(
                 padding: const EdgeInsets.only(top: 20.0),
-                child: textfield(
-                  context: context,
+                child: LabelCurrencyField(
                   labelText: 'CURRENCY',
                   hintText: 'USD',
                   width: 129,
-                  type: 'currency',
+                  height: 0,
                 ),
               ),
             ],
@@ -115,28 +111,17 @@ class _AddExpenseScreenState extends State<AddExpenseScreen> {
           Center(
             child: Padding(
               padding: const EdgeInsets.only(top: 20.0),
-              child: textfield(
-                context: context,
-                labelText: 'DATE',
-                width: 348,
-                type: 'date',
-                selectedDate: _selectedDate,
-                onDateChanged: (date) {
-                  setState(() => _selectedDate = date);
-                },
-              ),
+              child: LabelDateField(labelText: 'DATE', width: 348),
             ),
           ),
           Center(
             child: Padding(
               padding: const EdgeInsets.only(top: 20.0),
-              child: textfield(
-                context: context,
+              child: LabeledTextField(
                 labelText: 'NOTES',
                 hintText: 'Optional...',
                 width: 348,
                 height: 70,
-                type: 'normal',
               ),
             ),
           ),
