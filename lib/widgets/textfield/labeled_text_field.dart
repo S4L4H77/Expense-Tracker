@@ -7,16 +7,17 @@ class LabeledTextField extends StatelessWidget {
   final TextEditingController controller;
   final bool multiline; // was: height > 0
   final TextInputType? keyboardType;
-  final double width;
+
+  final String? Function(String?)? validator;
 
   const LabeledTextField({
     super.key,
     required this.label,
     required this.controller,
+    this.validator,
     this.hint,
     this.multiline = false,
     this.keyboardType,
-    this.width = 0,
   });
 
   @override
@@ -33,29 +34,25 @@ class LabeledTextField extends StatelessWidget {
           ),
         ),
         const SizedBox(height: 5),
-        SizedBox(
-          width: width > 0 ? width : null,
-          child: TextField(
-            controller: controller,
-            keyboardType: keyboardType,
-            maxLines: multiline
-                ? 3
-                : 1, // 4 lines ≈ the design's 66px notes box
-            decoration: InputDecoration(
-              hintText: hint,
-              hintStyle: const TextStyle(color: AppColors.muted),
-              contentPadding: const EdgeInsets.symmetric(
-                horizontal: 14,
-                vertical: 12,
-              ),
-              enabledBorder: const OutlineInputBorder(
-                borderRadius: BorderRadius.zero,
-                borderSide: BorderSide(color: AppColors.muted),
-              ),
-              focusedBorder: const OutlineInputBorder(
-                borderRadius: BorderRadius.zero,
-                borderSide: BorderSide(color: AppColors.accent),
-              ),
+        TextFormField(
+          controller: controller,
+          keyboardType: keyboardType,
+          validator: validator,
+          maxLines: multiline ? 3 : 1, // 4 lines ≈ the design's 66px notes box
+          decoration: InputDecoration(
+            hintText: hint,
+            hintStyle: const TextStyle(color: AppColors.muted),
+            contentPadding: const EdgeInsets.symmetric(
+              horizontal: 14,
+              vertical: 12,
+            ),
+            enabledBorder: const OutlineInputBorder(
+              borderRadius: BorderRadius.zero,
+              borderSide: BorderSide(color: AppColors.muted),
+            ),
+            focusedBorder: const OutlineInputBorder(
+              borderRadius: BorderRadius.zero,
+              borderSide: BorderSide(color: AppColors.accent),
             ),
           ),
         ),
