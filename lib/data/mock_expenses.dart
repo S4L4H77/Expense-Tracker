@@ -3,6 +3,7 @@ import '../models/expense.dart';
 // `final` (not const) because DateTime(...) isn't a compile-time constant.
 final List<Expense> mockExpenses = [
   Expense(
+    id: '1',
     title: 'Coffee',
     amountMinor: 450,
     currency: 'USD',
@@ -10,6 +11,7 @@ final List<Expense> mockExpenses = [
     date: DateTime(2026, 7, 17),
   ),
   Expense(
+    id: '2',
     title: 'Groceries',
     amountMinor: 8620,
     currency: 'USD',
@@ -17,6 +19,7 @@ final List<Expense> mockExpenses = [
     date: DateTime(2026, 7, 16),
   ),
   Expense(
+    id: '3',
     title: 'Bus pass',
     amountMinor: 4500,
     currency: 'ILS',
@@ -24,6 +27,7 @@ final List<Expense> mockExpenses = [
     date: DateTime(2026, 7, 14),
   ),
   Expense(
+    id: '4',
     title: 'Laptop',
     amountMinor: 129900,
     currency: 'USD',
@@ -32,6 +36,7 @@ final List<Expense> mockExpenses = [
     notes: 'Work laptop — reimbursable through Q3 equipment budget.',
   ),
   Expense(
+    id: '6',
     title: 'Cinema',
     amountMinor: 1800,
     currency: 'GBP',
@@ -40,6 +45,7 @@ final List<Expense> mockExpenses = [
     notes: 'Friday night double feature with Sam.',
   ),
   Expense(
+    id: '7',
     title: 'Lunch',
     amountMinor: 320000,
     currency: 'JPY',
@@ -47,6 +53,7 @@ final List<Expense> mockExpenses = [
     date: DateTime(2026, 7, 5),
   ),
   Expense(
+    id: '8',
     title: 'Pharmacy',
     amountMinor: 2240,
     currency: 'EUR',
