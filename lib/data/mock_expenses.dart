@@ -60,4 +60,12 @@ final List<Expense> mockExpenses = [
     category: Category.health,
     date: DateTime(2026, 7, 2),
   ),
+  Expense(
+    id: '8',
+    title: 'Pharmacy',
+    amountMinor: 2240,
+    currency: 'EUR',
+    category: Category.health,
+    date: DateTime(2026, 7, 2),
+  ),
 ];
